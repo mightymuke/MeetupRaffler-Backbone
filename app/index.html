@@ -55,13 +55,16 @@
 
     <script type="text/html" id="index">
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <h1 class="page-header"><%= title %></h1>
+        <h1 class="page-header" data-bind="text:title"></h1>
         <span class="text-muted">Put something nice here</span>
 
         <div class="index-edit">
-            <!--button {{action 'doneEditing'}}>Done</button>
-            <div>{{input type="text" value=title}}</div>
-            <button {{action 'edit'}}>Edit</button-->
+          <% if (isEditing) { %>
+            <button>Done</button>
+            <div><input type="text" data-bind="value:title,events:['keyup']" class="title" /></div>
+          <% } else { %>
+            <button>Edit</button>
+          <% } %>
         </div>
       </div>
     </script>
@@ -143,6 +146,7 @@
   <script src="js/libs/bootstrap/docs.min.js"></script>
   <script src="js/libs/underscore.js"></script>
   <script src="js/libs/backbone.js"></script>
+  <script src="js/libs/backbone.epoxy.min.js"></script>
   <script src="js/data.js"></script>
   <script src="js/index.js"></script>
   <script src="js/meetup.js"></script>
