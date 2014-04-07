@@ -6,6 +6,7 @@ var MeetupsCollection = Backbone.Collection.extend({
 });
 
 var MeetupsView = Backbone.View.extend({
+	el: '#template',
 	render: function() {
 		var template = $('#meetups').html();
 		this.$el.html(_.template(template));
@@ -23,9 +24,4 @@ var MeetupsItemView = Backbone.View.extend({
 		this.$el.html(_.template(template, this.model.toJSON()));
 		return this;
 	}
-});
-
-var meetupsView = new MeetupsView({
-	collection: new MeetupsCollection(dataMeetups.results),
-	el: '#template'
 });

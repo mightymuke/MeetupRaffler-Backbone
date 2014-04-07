@@ -1,5 +1,11 @@
+var indexModel = new Backbone.Model({
+	title: 'Dashboard'
+});
+
 var IndexView = Backbone.View.extend({
  	isEditing: false,
+
+	el: '#template',
 
 	initialize: function() {
 		this.model.on('change', function() {
@@ -29,15 +35,6 @@ var IndexView = Backbone.View.extend({
 		return this;
 	}
 })
-
-var indexModel = new Backbone.Model({
-	title: 'Dashboard'
-});
-
-var index = new IndexView({
-	model: indexModel,
-	el: '#template'
-});
 
 
 // var TitleView = Backbone.View.extend({
