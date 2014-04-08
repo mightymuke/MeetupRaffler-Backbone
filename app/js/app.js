@@ -5,16 +5,19 @@ var MeetupRafflerRouter = Backbone.Router.extend({
 		'meetups/:groupId': 'meetup',
 		'login#:credentials': 'authorisation'
 	},
+
 	authorisation: function(credentials) {
 		authorisationModel.saveAuthorisation(credentials);
 		this.navigate("/meetups", {trigger: true});
 	},
+
 	index: function() {
 		var indexView = new IndexView({
 			model: indexModel
 		});
 		indexView.render();
 	},
+
 	meetups: function() {
 		if (authorisationModel.userIsLoggedIn()) {
 			// var meetupsView = new MeetupsView({
@@ -39,14 +42,36 @@ var MeetupRafflerRouter = Backbone.Router.extend({
 			// 	});
 		}
 	},
+
 	meetup: function(groupId) {
 		if (authorisationModel.userIsLoggedIn()) {
-			var meetupModel = new Meetup(dataMeetup.results[0]);
-			meetupModel.set('rsvps', dataMeetupRsvps.results);
-			var meetupView = new MeetupView({
-				model: meetupModel,
+			// var meetupModel = new Meetup(dataMeetup.results[0]);
+			// meetupModel.set('rsvps', dataMeetupRsvps.results);
+			// var meetupView = new MeetupView({
+			// 	model: meetupModel,
+			// });
+			// meetupView.render();
+
+			var meetupModel = new Meetup({
+				id: groupId
 			});
-			meetupView.render();
+			meetupModel.fetch()
+				.then(
+					function(meetupDetails) {
+						meetupModel.set(meetupDetails.results[0]);
+						var rsvpsModel = new MeetupRsvp({
+							id: meetupModel.get('id')
+						});
+						return rsvpsModel.fetch();
+					})
+				.then(
+					function(rsvps) {
+						meetupModel.set('rsvps', MeetupRsvp.explodeTheGuests(rsvps.results));
+						var meetupView = new MeetupView({
+							model: meetupModel
+						});
+						meetupView.render();
+					});
 		}
 	}
 });
