@@ -1,7 +1,13 @@
 var MeetupsCollection = Backbone.Collection.extend({
 	model: Meetup,
+	url: function() {
+		return 'https://api.meetup.com/2/groups?member_id=' + authorisationModel.get('member_id') + '&access_token=' + authorisationModel.get('access_token');
+	},
 	comparator: function(meetup) {
 		return meetup.get('name');
+	},
+	parse: function(response) {
+		return response.results;
 	}
 });
 

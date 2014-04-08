@@ -1,6 +1,4 @@
 var AuthorisationModel = Backbone.Model.extend({
-	access_token: '',
-	isLoggedIn: false,
 	userIsLoggedIn: function() {
 		if (!this.get('isLoggedIn')) {
 			this.login();
@@ -24,7 +22,11 @@ var AuthorisationModel = Backbone.Model.extend({
 	}
 });
 
-var authorisationModel = new AuthorisationModel();
+var authorisationModel = new AuthorisationModel({
+	access_token: '',
+	isLoggedIn: false,
+	member_id: '69467752'
+});
 
 var LoginView = Backbone.View.extend({
 	el: 'li.authentication',
