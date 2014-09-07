@@ -25,6 +25,8 @@ window.MeetupRaffler = {
 	}
 };
 
+MeetupRaffler.Notifier = new NotificationManager(MeetupRaffler);
+
 var MeetupRafflerRouter = Backbone.Router.extend({
 	routes: {
 		'': 'index',
