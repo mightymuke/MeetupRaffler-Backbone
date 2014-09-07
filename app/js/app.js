@@ -61,6 +61,12 @@ var MeetupRafflerRouter = Backbone.Router.extend({
 				.then(
 					function(rsvps) {
 						meetupModel.set('rsvps', MeetupRsvp.explodeTheGuests(rsvps.results));
+						var winnersModel = new Winners({});
+						return winnersModel.fetch();
+					})
+				.then(
+					function(winners) {
+						meetupModel.set('winners', winners);
 						var meetupView = new MeetupView({
 							model: meetupModel
 						});

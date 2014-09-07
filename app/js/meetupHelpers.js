@@ -19,8 +19,6 @@ MeetupRaffler.Helpers.getRandomMember = function(model, previousWinners) {
 	var selectedPrizeId = selectedPrize.val();
 	if (selectedPrizeText !== "") {
 
-		model.set('isSelectingPrizeWinner', true);
-
 		var memberFound = false;
 		var winningMember = {};
 		var count = 0;
@@ -38,6 +36,7 @@ MeetupRaffler.Helpers.getRandomMember = function(model, previousWinners) {
 			}
 			previousWinners[selectedPrizeId].push({'member': winningMember});
 			MeetupRaffler.Helpers.displayWinner(winningMember, selectedPrizeText);
+			model.set('isSelectingPrizeWinner', true);
 		} else {
 			MeetupRaffler.Notifier.notify('error', 'Unable to find a winner');
 		}

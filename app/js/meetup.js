@@ -27,6 +27,12 @@ var MeetupRsvp = Backbone.Model.extend({
 	}
 });
 
+var Winners = Backbone.Model.extend({
+	url: function() {
+		return '/app/data/winners.json';
+	}
+});
+
 var MeetupRsvpsCollection = Backbone.Collection.extend({
 	model: MeetupRsvp,
 
@@ -72,8 +78,7 @@ var RandomMemberSelectorView = Backbone.View.extend({
 	},
 
 	getRandomMember: function() {
-		var previousWinners = {};
-		MeetupRaffler.Helpers.getRandomMember(this.model, previousWinners);
+		MeetupRaffler.Helpers.getRandomMember(this.model, this.model.get('winners'));
 		this.render();
 		return false;
 	},
