@@ -61,26 +61,15 @@ var MeetupRafflerRouter = Backbone.Router.extend({
 
 	meetups: function() {
 		if (authorisationModel.userIsLoggedIn()) {
-			// var meetupsView = new MeetupsView({
-			// 	collection: new MeetupsCollection(dataMeetups.results)
-			// });
-
 			var meetupsCollection = new MeetupsCollection();
 			meetupsCollection.fetch({
-				success: function(collection) {
+				success: function(meetups) {
 					var meetupsView = new MeetupsView({
-						collection: collection
+						collection: meetups
 					});
 					meetupsView.render();
 				}
 			});
-			// meetupsCollection.fetch().then(
-			// 	function(response) {
-			// 		var meetupsView = new MeetupsView({
-			// 			collection: response.results
-			// 		});
-			// 		meetupsView.render();
-			// 	});
 		}
 	},
 
