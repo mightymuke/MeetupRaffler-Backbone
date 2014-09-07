@@ -46,93 +46,12 @@
             <li><a href="#/meetups">Meetups</a></li>
           </ul>
         </div>
-
-        <div id="template"></div>
-
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div id="template"></div>
+        </div>
       </div>
     </div>
 
-    <script type="text/html" id="index">
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <h1 class="page-header" data-bind="text:title"></h1>
-        <span class="text-muted">Put something nice here</span>
-
-        <div class="index-edit">
-          <% if (isEditing) { %>
-            <button>Done</button>
-            <div><input type="text" data-bind="value:title,events:['keyup']" class="title" /></div>
-          <% } else { %>
-            <button>Edit</button>
-          <% } %>
-        </div>
-      </div>
-    </script>
-
-    <script type="text/html" id="meetup">
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <h1 class="page-header"><%= group.name %></h1>
-        <div style="float: left;" class="member-meetup-name"><h3>Next Event: </h3></div><a href="<%= event_url %>" class="thumb" style="float: left;">
-          <div class="nametag-photo-name member-meetup-name">
-            <h3 class="event-name"><%= name %></h3>
-          </div>
-        </a>
-        <div style="float: right;">
-          <a href="" onclick="getRandomMember();">Random Member</a>
-        </div>
-        <div style="clear: both;">
-          <h4>(<span class="count"><%= yes_rsvp_count %></span> <%= group.who %>)</h4>
-        </div>
-        <ul id="meetups-rsvps"></ul>
-      </div>
-    </script>
-
-    <script type="text/html" id="meetup-rsvps">
-        <li class="thumbnail member-listing member-<%= member.member_id %>">
-          <% if ((typeof member_photo !== "undefined") && (typeof member_photo.thumb_link !== "undefined")) { %>
-            <div class="member-photo"><img src="<%= member_photo.thumb_link %>" width="50" /></div>
-          <% } else { %>
-            <div class="member-photo"><img src="http://img2.meetupstatic.com/img/458386242735519287330/noPhoto_50.png" width="50" height="50" /></div>
-          <% } %>
-          <div class="rsvp-details">
-            <a href="http://www.meetup.com/<%= group.urlname %>/members/<%= member.member_id %>" class="thumb">
-              <div class="nametag-photo-name">
-                <h5 class="meetup-name"><%= member.name %></h5>
-              </div>
-            </a>
-          </div>
-        </li>
-    </script>
-
-    <script type="text/html" id="meetups">
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <h1 class="page-header">Your Meetups</h1>
-        <ul class="meetups" id="meetups-list">
-        </ul>
-      </div>
-    </script>
-
-    <script type="text/html" id="meetups-item">
-      <li class="thumbnail meetup-listing">
-        <div class="meetup-photo">
-          <% if ((typeof group_photo !== "undefined") && (typeof group_photo.thumb_link !== "undefined")) { %>
-            <img src="<%= group_photo.thumb_link %>" />
-          <% } else { %>
-            <img src="http://photos4.meetupstatic.com/img/noPhoto_80.png" />
-          <% } %>
-        </div>
-        <div class="meetup-details">
-          <a href="#/meetups/<%= id %>" class="thumb">
-            <div class="nametag-photo-name">
-              <h3 class="meetup-name"><%= name %></h3>
-            </div>
-          </a>
-          <div>
-            <h4><span class="count"><%= members %></span> <%= who %></h4>
-          </div>
-        </div>
-      </li>
-    </script>
-  
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/libs/jquery/jquery-1.11.0.min.js"><\/script>')</script>
     <script src="js/libs/noty/jquery.noty.js"></script>

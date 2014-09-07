@@ -1,5 +1,5 @@
 var indexModel = new Backbone.Model({
- 	isEditing: false,
+	isEditing: false,
 	title: 'Dashboard'
 });
 

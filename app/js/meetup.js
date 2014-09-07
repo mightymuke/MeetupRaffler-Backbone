@@ -1,4 +1,5 @@
 var Meetup = Backbone.Model.extend({
+	isSelectingPrizeWinner: false,
 	url: function() {
 		return 'https://api.meetup.com/2/events?&status=upcoming&limited_events=true&page=1&group_id=' + this.get('id') + '&access_token=' + authorisationModel.get('access_token');
 	}
@@ -8,7 +9,8 @@ var MeetupRsvp = Backbone.Model.extend({
 	url: function() {
 		return 'https://api.meetup.com/2/rsvps?&rsvp=yes&event_id=' + this.get('id') + '&access_token=' + authorisationModel.get('access_token');
 	}
-},{
+},
+{
 	explodeTheGuests: function(rsvps) {
 		var guests = rsvps.filter(function(rsvp) {
 			return rsvp.guests > 0;
