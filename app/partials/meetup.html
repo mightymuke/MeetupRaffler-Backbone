@@ -5,14 +5,7 @@
       <h3 class="event-name"><%= name %></h3>
     </div>
   </a>
-  <div style="float: right; padding-left: 20px;">
-    <% if (isSelectingPrizeWinner) { %>
-    {{#if isSelectingPrizeWinner}}
-      <a href="" {{action 'resetMemberTiles'}}>Reset</a>
-    <% } else { %>
-      <a href="" onclick="getRandomMember();">Random Member</a>
-    <% } %>
-  </div>
+  <div style="float: right; padding-left: 20px;" class="random-member-selector"></div>
   <div style="float: right;">
     <span>Prize: </span>
     <select id="prize">
@@ -26,7 +19,7 @@
   <div style="clear: both;">
     <h4>(<span class="count"><%= yes_rsvp_count %></span> <%= group.who %>)</h4>
   </div>
-  <ul id="meetups-rsvps"></ul>
+  <div id="member-listings"></div>
 </script>
 
 <script type="text/html" id="meetup-rsvps">

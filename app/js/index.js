@@ -9,7 +9,7 @@ var IndexView = Backbone.Epoxy.View.extend({
 	bindings: "data-bind",
 
 	events: {
-		'click button': 'handleClick',
+		'click button': 'handleClick'
 	},
 
 	handleClick: function() {

@@ -1,32 +1,3 @@
-window.MeetupRaffler = {
-
-	useMeetupWebServices: false,     // If false will used cached data files
-
-	userMeetupId: 69467752,          // Users meetup ID
-
-	htmlTemplates: [
-		'partials/index.html',
-		'partials/meetups.html',
-		'partials/meetup.html'
-	],
-
-	initialize: function() {
-		// Load up all the HTML templates
-		$.each(this.htmlTemplates, function() {
-			$.ajax({
-				async: false,
-				type: 'GET',
-				url: this,
-				success: function(resp) {
-					$('body').append(resp);
-				}
-			});
-		});
-	}
-};
-
-MeetupRaffler.Notifier = new NotificationManager(MeetupRaffler);
-
 var MeetupRafflerRouter = Backbone.Router.extend({
 	routes: {
 		'': 'index',
@@ -75,13 +46,6 @@ var MeetupRafflerRouter = Backbone.Router.extend({
 
 	meetup: function(groupId) {
 		if (authorisationModel.userIsLoggedIn()) {
-			// var meetupModel = new Meetup(dataMeetup.results[0]);
-			// meetupModel.set('rsvps', dataMeetupRsvps.results);
-			// var meetupView = new MeetupView({
-			// 	model: meetupModel,
-			// });
-			// meetupView.render();
-
 			var meetupModel = new Meetup({
 				id: groupId
 			});
@@ -117,8 +81,6 @@ var OfflineBannerView = Backbone.View.extend({
 		return this;
 	}
 });
-
-MeetupRaffler.initialize();
 
 var offlineBannerView = new OfflineBannerView();
 offlineBannerView.render();
