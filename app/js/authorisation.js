@@ -14,7 +14,11 @@ var AuthorisationModel = Backbone.Model.extend({
 	},
 
 	login: function() {
-		window.location.replace("https://secure.meetup.com/oauth2/authorize?client_id=m61ttgfkb90dvso8choqa8sltr&response_type=token&redirect_uri=http%3A%2F%2Flocalhost:8003%2Fapp%2Findex.html%23%2Flogin");
+		if (MeetupRaffler.useMeetupWebServices) {
+			window.location.href = "https://secure.meetup.com/oauth2/authorize?client_id=m61ttgfkb90dvso8choqa8sltr&response_type=token&redirect_uri=http%3A%2F%2Flocalhost:8003%2Fapp%2Findex.html%23%2Flogin";
+		} else {
+			window.location.href = "/app/index.html#/login#expires_in=3600&token_type=bearer&access_token=offline";
+		}
 	},
 
 	saveAuthorisation: function(queryString) {
@@ -73,9 +77,9 @@ var LoginView = Backbone.View.extend({
 
 	render: function() {
 		if (!this.model.get('isLoggedIn')) {
-			this.$el.html('<a href="#" class="login">Login</a>');
+			this.$el.html('<a href="" class="login">Login</a>');
 		} else {
-			this.$el.html('<a href="#" class="logout">Logout</a>');
+			this.$el.html('<a href="" class="logout">Logout</a>');
 		}
 		return this;
 	}
