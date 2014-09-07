@@ -1,0 +1,13 @@
+<script type="text/html" id="index">
+  <h1 class="page-header" data-bind="text:title"></h1>
+  <span class="text-muted">Put something nice here</span>
+
+  <div class="index-edit">
+    <% if (isEditing) { %>
+      <button>Done</button>
+      <div><input type="text" data-bind="value:title,events:['keyup']" class="title" /></div>
+    <% } else { %>
+      <button>Edit</button>
+    <% } %>
+  </div>
+</script>

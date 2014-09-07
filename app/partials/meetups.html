@@ -1,0 +1,27 @@
+<script type="text/html" id="meetups">
+  <h1 class="page-header">Your Meetups</h1>
+  <ul class="meetups" id="meetups-list">
+  </ul>
+</script>
+
+<script type="text/html" id="meetups-item">
+  <li class="thumbnail meetup-listing">
+    <div class="meetup-photo">
+      <% if ((typeof group_photo !== "undefined") && (typeof group_photo.thumb_link !== "undefined")) { %>
+        <img src="<%= group_photo.thumb_link %>" />
+      <% } else { %>
+        <img src="http://photos4.meetupstatic.com/img/noPhoto_80.png" />
+      <% } %>
+    </div>
+    <div class="meetup-details">
+      <a href="#/meetups/<%= id %>" class="thumb">
+        <div class="nametag-photo-name">
+          <h3 class="meetup-name"><%= name %></h3>
+        </div>
+      </a>
+      <div>
+        <h4><span class="count"><%= members %></span> <%= who %></h4>
+      </div>
+    </div>
+  </li>
+</script>
