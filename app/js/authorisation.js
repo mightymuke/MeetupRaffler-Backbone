@@ -13,12 +13,11 @@ var AuthorisationModel = Backbone.Model.extend({
 		return true;
 	},
 
-	login: function() {
-		if (MeetupRaffler.useMeetupWebServices) {
-			window.location.href = "https://secure.meetup.com/oauth2/authorize?client_id=m61ttgfkb90dvso8choqa8sltr&response_type=token&redirect_uri=http%3A%2F%2Flocalhost:8003%2Fapp%2Findex.html%23%2Flogin";
-		} else {
-			window.location.href = "/app/index.html#/login#expires_in=3600&token_type=bearer&access_token=offline";
-		}
+	clearAuthorisation: function() {
+		var attributes = {};
+		attributes['access_token'] = '';
+		attributes['isLoggedIn'] = false;
+		this.set(attributes);
 	},
 
 	saveAuthorisation: function(queryString) {
@@ -33,7 +32,6 @@ var AuthorisationModel = Backbone.Model.extend({
 		}
 		attributes['isLoggedIn'] = true;
 		this.set(attributes);
-	 	MeetupRaffler.Notifier.notify('information', 'Successfully logged in!');
 	},
 
 	fetch: function() {
@@ -58,29 +56,20 @@ var LoginView = Backbone.View.extend({
 
 	model: authorisationModel,
 
-	events: {
-		'click a.login': 'login',
-		'click a.logout': 'logout',
-	},
-
-	login: function() {
-		authorisationModel.login();
-	},
-
-	logout: function() {
-		this.model.set('isLoggedIn', false);
-		this.model.set('access_token', '');
-		this.render();
-		MeetupRaffler.Notifier.notify('information', 'Thanks for visiting. You have been signed out.');
-		MeetupRafflerRouter.navigate("/", true);
-	},
-
 	render: function() {
-		if (!this.model.get('isLoggedIn')) {
-			this.$el.html('<a href="" class="login">Login</a>');
-		} else {
-			this.$el.html('<a href="" class="logout">Logout</a>');
+		var loginUrl = "https://secure.meetup.com/oauth2/authorize?client_id=m61ttgfkb90dvso8choqa8sltr&response_type=token&redirect_uri=http%3A%2F%2Flocalhost:8003%2Fapp%2Findex.html%23%2Flogin";
+		if (!MeetupRaffler.useMeetupWebServices) {
+			loginUrl = "/app/index.html#/login#expires_in=3600&token_type=bearer&access_token=offline";
 		}
+
+		var logoutUrl = "/app/index.html#/logout";
+
+		if (!this.model.get('isLoggedIn')) {
+			this.$el.html('<a href="' + loginUrl + '" class="login">Login</a>');
+		} else {
+			this.$el.html('<a href="' + logoutUrl + '" class="logout">Logout</a>');
+		}
+
 		return this;
 	}
 });

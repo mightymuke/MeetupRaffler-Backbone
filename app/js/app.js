@@ -32,12 +32,24 @@ var MeetupRafflerRouter = Backbone.Router.extend({
 		'': 'index',
 		'meetups': 'meetups',
 		'meetups/:groupId': 'meetup',
-		'login#:credentials': 'authorisation'
+		'login#:credentials': 'authorisation',
+		'logout': 'logout'
 	},
 
 	authorisation: function(credentials) {
 		authorisationModel.saveAuthorisation(credentials);
-		this.navigate("/meetups", {trigger: true});
+		if (authorisationModel.userIsLoggedIn()) {
+			MeetupRaffler.Notifier.notify('information', 'Successfully logged in!');
+			loginView.render();
+			this.navigate("/meetups", {trigger: true});
+		}
+	},
+
+	logout: function() {
+		authorisationModel.clearAuthorisation();
+		MeetupRaffler.Notifier.notify('information', 'Thanks for visiting. You have been signed out.');
+		loginView.render();
+		this.navigate("/", {trigger: true});
 	},
 
 	index: function() {
@@ -119,11 +131,11 @@ var OfflineBannerView = Backbone.View.extend({
 
 MeetupRaffler.initialize();
 
-var router = new MeetupRafflerRouter();
-Backbone.history.start();
-
 var offlineBannerView = new OfflineBannerView();
 offlineBannerView.render();
 
 var loginView = new LoginView();
 loginView.render();
+
+var router = new MeetupRafflerRouter();
+Backbone.history.start();
