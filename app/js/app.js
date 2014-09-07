@@ -105,10 +105,25 @@ var MeetupRafflerRouter = Backbone.Router.extend({
 	}
 });
 
+var OfflineBannerView = Backbone.View.extend({
+	el: 'div.offline-alert',
+
+	render: function() {
+		if (!MeetupRaffler.useMeetupWebServices) {
+			this.$el.html('<p>Offline Mode</p>');
+			this.$el.removeClass('hide-me');
+		}
+		return this;
+	}
+});
+
 MeetupRaffler.initialize();
 
 var router = new MeetupRafflerRouter();
 Backbone.history.start();
+
+var offlineBannerView = new OfflineBannerView();
+offlineBannerView.render();
 
 var loginView = new LoginView();
 loginView.render();
