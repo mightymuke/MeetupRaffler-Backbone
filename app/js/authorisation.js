@@ -6,11 +6,7 @@ var AuthorisationModel = Backbone.Model.extend({
 	},
 
 	userIsLoggedIn: function() {
-		if (!this.get('isLoggedIn')) {
-			this.login();
-			return false;
-		}
-		return true;
+		return this.get('isLoggedIn');
 	},
 
 	clearAuthorisation: function() {

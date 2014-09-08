@@ -23,4 +23,4 @@ var IndexView = Backbone.Epoxy.View.extend({
 		this.applyBindings();
 		return this;
 	}
-})
+});

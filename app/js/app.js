@@ -95,4 +95,23 @@ var loginView = new LoginView();
 loginView.render();
 
 var router = new MeetupRafflerRouter();
+router.bind('all', function(route, section) {
+    var $el;
+    route = route.replace('route:', '');
+
+    $el = $('.navitem-' + route);
+
+	if (route == "route") {
+		return;
+	} else if ($el.length < 1) {
+        $('.nav-sidebar li.active').removeClass('active');
+        return;
+    } else if ($el.hasClass('active')) {
+        return;
+    } else {
+        $('.nav-sidebar li.active').removeClass('active');
+        $el.addClass('active');
+    }
+});
+
 Backbone.history.start();
