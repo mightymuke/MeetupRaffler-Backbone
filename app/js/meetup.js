@@ -4,21 +4,14 @@ var Meetup = Backbone.Model.extend({
 	},
 
 	url: function() {
-		var url = 'https://api.meetup.com/2/events?&status=upcoming&limited_events=true&page=1&group_id=' + this.get('id') + '&access_token=' + authorisationModel.get('access_token');
-		if (!MeetupRaffler.useMeetupWebServices) {
-			url = '/app/data/meetup.json';
-		}
-		return url;
+		return MeetupRaffler.urls.meetup(this.get('id'), authorisationModel.get('access_token'));
+
 	}
 });
 
 var MeetupRsvp = Backbone.Model.extend({
 	url: function() {
-		var url = 'https://api.meetup.com/2/rsvps?&rsvp=yes&event_id=' + this.get('id') + '&access_token=' + authorisationModel.get('access_token');
-		if (!MeetupRaffler.useMeetupWebServices) {
-			url = '/app/data/rsvps.json';
-		}
-		return url;
+		return MeetupRaffler.urls.meetupRsvps(this.get('id'), authorisationModel.get('access_token'));
 	}
 },
 {
@@ -29,7 +22,7 @@ var MeetupRsvp = Backbone.Model.extend({
 
 var Winners = Backbone.Model.extend({
 	url: function() {
-		return '/app/data/winners.json';
+		return MeetupRaffler.urls.winners();
 	}
 });
 
@@ -47,12 +40,15 @@ var MeetupView = Backbone.View.extend({
 	render: function() {
 		var template = $('#meetup').html();
 		this.$el.html(_.template(template, this.model.toJSON()));
+
 		this.$el.find('div.random-member-selector').append(new RandomMemberSelectorView({
 			model: this.model
 		}).render().el);
+
 		this.$el.find('#member-listings').append(new MeetupRsvpsView({
 			collection: new MeetupRsvpsCollection(this.model.get('rsvps'))
 		}).render().el);
+
 		return this;
 	}
 });
